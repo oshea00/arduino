@@ -83,6 +83,8 @@ void drawEye(float pupilSize)
     }
     fill(0);
     ellipse(0,0,pupilSize,pupilSize);
+    fill(255);
+    ellipse(15,-15,8,8);
     popMatrix();
     popStyle();
 }
