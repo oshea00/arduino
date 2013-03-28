@@ -14,5 +14,11 @@ Project Video
 This video shows the outcome of this little experiment in the all-Processing Arduino solution. The various processing programs and snippet I've checked-in show examples of the graphic commands and communication commands needed. The final project used almost every one of these smaller examples.
 [Seeing-Eye Arduino](http://youtu.be/O2iBeqT9KgA)
 
+Node.js Examples
+-----
+Just added readdata.js which connects to a serial port and reads data sent by the Arduino.
+Also added the simple Arduino 'sketch' that sends the data.
+
+
 Enjoy,
 Mike
