@@ -14,11 +14,15 @@ Arduino arduino;
 int minval=9999;
 int maxval=0;
 float r=0;
+int a0;
 PFont f;
 
 void setup() {
   size(200, 200);
+  try {
   arduino = new Arduino(this, Arduino.list()[0], 57600);
+  } catch (Exception ex)
+  {}
   f = createFont("Krungthep",20,true);
   smooth();
 }
@@ -28,8 +32,8 @@ void draw() {
   background(255);
   textFont(f);
   textAlign(CENTER);
- 
-  int a0 = arduino.analogRead(0);
+  if (arduino!=null)
+      a0 = arduino.analogRead(0);     
   if (a0 < minval) minval = a0;
   if (a0 > maxval) maxval = a0;
   if (maxval==minval || abs(maxval-minval) <= 20)
