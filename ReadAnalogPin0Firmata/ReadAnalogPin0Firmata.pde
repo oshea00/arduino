@@ -16,9 +16,6 @@ int maxval=0;
 float r=0;
 PFont f;
 
-color off = color(4, 79, 111);
-color on = color(84, 145, 158);
-
 void setup() {
   size(200, 200);
   arduino = new Arduino(this, Arduino.list()[0], 57600);
