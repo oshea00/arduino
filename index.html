@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Seeing Eye Arduino</title>
+<canvas id="drawing"></canvas>
+<script src="processing.js"></script>
+<body>
+<script>
+var a0=0;
+var socket = new WebSocket('ws://localhost:8080','echo-protocol');
+
+// Add a connect listener
+socket.onmessage = function(event) {
+    a0 = parseInt(event.data);
+    console.log(event.data + ' ' + a0);
+};
+
+function sketch(p) {
+  var minval = 9999;  
+  var maxval = 0;  
+  var r = 0;  
+  var f = null;   
+
+  p.setup = function() {
+    p.size(200, 200);   
+    f = p.createFont("Krungthep",20,true);   
+    p.smooth();
+  }
+
+  p.draw = function() {
+    p.background(255);   
+    p.textFont(f);   
+    p.textAlign(p.CENTER);   
+    //    a0 = arduino.analogRead(0);   
+    if (a0 < minval) minval = a0;   
+    if (a0 > maxval) maxval = a0;   
+    if (maxval==minval || p.abs(maxval-minval) <= 20)
+      r=60;   
+    else   {
+      r =  p.abs(a0-minval) /  p.abs(maxval-minval);       
+      r *= 50;       
+      r += 10;
+    }      
+
+    p.pushMatrix();   
+    p.translate(20,40);   
+    drawEye(r);   
+    p.popMatrix();      
+    p.fill(0,127,127);   
+    p.text("A0="+a0,p.width/2,p.height-25);
+    if (p.__mousePressed) {
+      minval = 9999;     maxval = 0;
+    }
+  }
+   
+  function drawEye(pupilSize) {
+    var theta = 0;     
+    p.pushStyle();     
+    p.stroke(0);     
+    p.noFill();     
+    p.bezier(0,40,30,-12,130,-12,160,40);     
+    p.bezier(0,40,30,92,130,92,160,40);     
+    p.pushMatrix();     
+    p.fill(0xFF9B9DF7);     
+    p.ellipse(80,40,80,80);     
+    p.translate(80,40);     
+    for (var i = 0; i<360; i+=(360/12)) {
+      p.rotate((2*p.PI)/12);         
+      p.line(-40,0,40,0);
+    }     
+    p.fill(0);     
+    p.ellipse(0,0,pupilSize,pupilSize);     
+    p.fill(255);     
+    p.ellipse(15,-15,8,8);     
+    p.popMatrix();     
+    p.popStyle();
+  }
+}
+
+var canvas = document.getElementById("drawing");
+var processingInstance = new Processing(canvas,sketch);
+</script>
+
+</body>
+</html>
+
