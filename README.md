@@ -16,8 +16,9 @@ This video shows the outcome of this little experiment in the all-Processing Ard
 
 Node.js Examples
 -----
-Just added readdata.js which connects to a serial port and reads data sent by the Arduino.
-Also added the simple Arduino 'sketch' that sends the data.
+* Just added readdata.js which connects to a serial port and reads data sent by the Arduino.
+* Also added the simple Arduino 'sketch' that sends the data.
+* Added index.html which uses WebSocket and processing.js to retrieve and display data from node.js WebSocket server.
 
 
 Enjoy,
