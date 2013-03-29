@@ -1,5 +1,5 @@
-// This sketch depends on Firmata running on the Arduino.
-// It uses the Firmata library for Processing.org to query
+// This sketch uses serial IO to communicate with the Arduino.
+// The Arduino is writing out values from
 // analog input 0 - which in this case has a photoresistor
 // on it.
 //
