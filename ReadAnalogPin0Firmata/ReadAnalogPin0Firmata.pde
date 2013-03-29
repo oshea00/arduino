@@ -8,9 +8,8 @@
 // sensed.
 //
 import processing.serial.*;
-import cc.arduino.*;
 
-Arduino arduino;
+Serial myPort;
 int minval=9999;
 int maxval=0;
 float r=0;
@@ -19,21 +18,50 @@ PFont f;
 
 void setup() {
   size(200, 200);
-  try {
-  arduino = new Arduino(this, Arduino.list()[0], 57600);
-  } catch (Exception ex)
-  {}
+  myPort = new Serial(this,"/dev/cu.usbmodemfd121",9600);
+  myPort.clear();
   f = createFont("Krungthep",20,true);
   smooth();
 }
 
+// Reads string between two delimiters in serial stream 
+String readLine(Serial p,int firstDelim, int secondDelim) {
+  StringBuilder sb = new StringBuilder();
+  Boolean isFirstDelim = false;
+  int c;
+  while (true)
+  {
+    while ((c = p.read()) < 0);
+    if (!isFirstDelim)
+    {
+      if (c != firstDelim)
+        continue;
+      isFirstDelim = true;
+    }
+    else
+    if (c != secondDelim)
+      sb.append((char)c);
+    else
+      break;
+  }  
+  return sb.toString();
+}
+
+void getReading()
+{
+  String line;
+  if (myPort.available()>0) {
+    line = readLine(myPort,10,13);
+    if (line != null && line.length()>0)
+      a0 = Integer.parseInt(line);
+  }
+}
+
 void draw() {
-  
   background(255);
   textFont(f);
   textAlign(CENTER);
-  if (arduino!=null)
-      a0 = arduino.analogRead(0);     
+  getReading();
   if (a0 < minval) minval = a0;
   if (a0 > maxval) maxval = a0;
   if (maxval==minval || abs(maxval-minval) <= 20)
@@ -44,10 +72,7 @@ void draw() {
       r *= 50;
       r += 10;
   }
-  
-  //println("val:"+(a0-minval)+" range:"+abs(maxval-minval));
-  //println(r);
-  
+    
   pushMatrix();
   translate(20,40);
   drawEye(r);
