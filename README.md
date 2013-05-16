@@ -20,6 +20,10 @@ Node.js Examples
 * Also added the simple Arduino 'sketch' that sends the data.
 * Added index.html which uses WebSocket and processing.js to retrieve and display data from node.js WebSocket server.
 
+johnny-five
+-----
+* Added johnny5test.js which shows how to use johnny-five module to talk to Firmata enabled arduino.
+
 
 Enjoy,
 Mike
