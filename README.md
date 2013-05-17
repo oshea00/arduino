@@ -23,6 +23,13 @@ Node.js Examples
 johnny-five
 -----
 * Added johnny5test.js which shows how to use johnny-five module to talk to Firmata enabled arduino.
+* This also demos the use of the 'ws' "npm install ws" websockets module to send
+  the data read from A0 pin.
+* Also hosts a little web server on localhost:8080.
+* URL http://localhost:8080/index.html
+  while running "node johnny5test.js"
+
+
 
 
 Enjoy,
